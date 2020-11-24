@@ -1,6 +1,6 @@
 # 水平多段显示小部件
 
-![image](./screenshot/Screenshot_1606210471.png)
+<img src="./screenshot/Screenshot_1606210471.png"  height="660" width="300">
 
 ## 参数：
 
