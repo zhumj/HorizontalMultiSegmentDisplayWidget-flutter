@@ -3,18 +3,18 @@
 <img src="./screenshot/Screenshot_1606210471.png"  height="660" width="300">
 
 ## 参数：
-
-    参数|格式|作用
-    :-:|:-:|:-:
-    defaultValue|double|值
-    doubleValues|List<double>|区间
-    stringValues|List<String>|区间提示
-    colorValues|List<Color>|区间颜色
-    strokeWidth|double|线的宽度
-    radius|double|线上圆的半径
-    textStyle|TextStyle|文字风格
-    textAlign|TextAlign|文字对齐方式
-    textDirection|TextDirection|文字方向
+  
+      |参数|必填|类型|说明|
+      |:-:|:-:|:-:|:-:|
+      |defaultValue|是|double|值|
+      |doubleValues|是|List<double>|区间|
+      |stringValues|是|List<String>|区间提示|
+      |colorValues|是|List<Color>|区间颜色|
+      |strokeWidth|否|double|线的宽度，默认 3|
+      |radius|否|double|线上圆的半径，默认 5|
+      |textStyle|否|TextStyle|文字风格， 默认 TextStyle(fontSize: 14,color: Colors.black)|
+      |textAlign|否|TextAlign|文字对齐方式，默认 TextAlign.center|
+      |textDirection|否|TextDirection|文字方向，默认 TextDirection.ltr|
     
 ## 使用：
 
