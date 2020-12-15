@@ -85,10 +85,12 @@ class MyPainter extends CustomPainter {
     int totalInterval = doubleValues.length - 1;
     // 每一区间占用width
     double widthByInterval = size.width/totalInterval;
+    // 值所在区间
+    int valueInInterval = 1;
     // 画笔
     Paint paint = Paint();
 
-    for(int i = 0; i<totalInterval; i++) {
+    for(int i = 0; i < totalInterval; i++) {
       // 画分段区间线
       paint.strokeWidth = strokeWidth;
       paint.style = PaintingStyle.fill;
@@ -98,35 +100,6 @@ class MyPainter extends CustomPainter {
         Offset(widthByInterval*(i+1), size.height/2),
         paint,
       );
-
-      // 画值的圆圈
-      if (i > 0) {
-        if (defaultValue < doubleValues[i] && !isPainted) {
-          paint.color = colorValues[i-1];
-          double step = widthByInterval/(doubleValues[i] - doubleValues[i-1]);
-          canvas.drawCircle(
-            Offset(step*(defaultValue - doubleValues[i-1]) + widthByInterval * (i-1), size.height/2),
-            radius,
-            paint,
-          );
-          isPainted = true;
-        } else if (i >= totalInterval-1 && !isPainted) {
-          paint.color = colorValues[i];
-          double step = widthByInterval/(doubleValues[i+1] - doubleValues[i]);
-          double ddx;
-          if (defaultValue >= doubleValues[i + 1]) {
-            ddx = step*(doubleValues[i + 1] - doubleValues[i]);
-          } else {
-            ddx = step*(defaultValue - doubleValues[i]);
-          }
-          canvas.drawCircle(
-            Offset(ddx + widthByInterval * i, size.height/2),
-            radius,
-            paint,
-          );
-          isPainted = true;
-        }
-      }
 
       // 画分段区间数值
       if (i > 0) {
@@ -149,7 +122,36 @@ class MyPainter extends CustomPainter {
           size.height/2 + textPainterSize.height / 2,
         ),
       );
+
+      // 计算值所在区间
+      if (defaultValue < doubleValues.first) {
+        valueInInterval = 1;
+      } else if (defaultValue > doubleValues[totalInterval-1]) {
+        // 值大于最大值
+        valueInInterval = totalInterval;
+      } else {
+        if(i > 0 && defaultValue >= doubleValues[i-1] && defaultValue < doubleValues[i]) {
+          valueInInterval = i;
+        }
+      }
+
     }
+
+    // 画值的圆圈
+    double _value = defaultValue;
+    if (defaultValue < doubleValues.first) {
+      _value = doubleValues.first;
+    } else if (defaultValue > doubleValues.last) {
+      // 值大于最大值
+      _value = doubleValues.last;
+    }
+    paint.color = colorValues[valueInInterval-1];
+    double step = widthByInterval/(doubleValues[valueInInterval] - doubleValues[valueInInterval-1]);
+    canvas.drawCircle(
+      Offset(step*(_value - doubleValues[valueInInterval-1]) + widthByInterval * (valueInInterval-1), size.height/2),
+      radius,
+      paint,
+    );
   }
 
   TextPainter _getTextPainter(String text) {
